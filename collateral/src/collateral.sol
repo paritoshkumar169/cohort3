@@ -24,16 +24,14 @@ contract SimpleCollateralToken is ERC20, Ownable {
         require(amount > 0, "Are you a Retard");
         require(balanceOf(msg.sender) >= amount, "You poor");
         
-        // Transfer tokens from user to contract
         _transfer(msg.sender, address(this), amount);
         
-        // Update user's staked balance
+   
         stakedBalances[msg.sender] += amount;
         
-        // Update total staked
+     
         totalStaked += amount;
-        
-        // Emit event
+
         emit Staked(msg.sender, amount);
     }
     
@@ -42,20 +40,18 @@ contract SimpleCollateralToken is ERC20, Ownable {
         require(amount > 0, "Cannot unstake zero amount");
         require(stakedBalances[msg.sender] >= amount, "Insufficient staked balance");
         
-        // Update user's staked balance
         stakedBalances[msg.sender] -= amount;
         
-        // Update total staked
+      
         totalStaked -= amount;
         
-        // Transfer tokens back to user
         _transfer(address(this), msg.sender, amount);
         
-        // Emit event
+     
         emit Unstaked(msg.sender, amount);
     }
     
-    // View function to check staked balance
+ 
     function getStakedBalance(address user) public view returns (uint256) {
         return stakedBalances[user];
     }
