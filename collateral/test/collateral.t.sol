@@ -15,7 +15,6 @@ contract SimpleCollateralTokenTest is Test {
         vm.label(alice, "Alice");
         vm.label(bob, "Bob");
         
-        // Transfer some tokens to test accounts
         vm.startPrank(address(this));
         token.transfer(alice, 1000 * 10**18);
         token.transfer(bob, 500 * 10**18);
@@ -25,15 +24,14 @@ contract SimpleCollateralTokenTest is Test {
     function testStakeCollateral() public {
         uint256 stakeAmount = 100 * 10**18;
         
-        // Check initial state
+  
         assertEq(token.stakedBalances(alice), 0);
         assertEq(token.totalStaked(), 0);
         
-        // Stake tokens
+  
         vm.prank(alice);
         token.stakeCollateral(stakeAmount);
-        
-        // Verify staking worked
+     
         assertEq(token.stakedBalances(alice), stakeAmount);
         assertEq(token.totalStaked(), stakeAmount);
         assertEq(token.balanceOf(alice), 900 * 10**18);
